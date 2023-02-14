@@ -1,0 +1,49 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="com.atlassian.example.scheduling.TwitterSchedulerBundle"/>
+    
+    <!-- add our web resources -->
+    <web-resource key="scheduling-resources" name="scheduling Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        
+        <resource type="download" name="scheduling.css" location="/css/scheduling.css"/>
+        <resource type="download" name="scheduling.js" location="/js/scheduling.js"/>
+        <resource type="download" name="images/" location="/images"/>
+
+        <context>scheduling</context>
+    </web-resource>
+
+    <component key="schedulerComponent" class="com.atlassian.example.scheduling.TwitterMonitorImpl"
+               system="true" public="true">
+        <description>The plugin component that schedules the Twitter search.</description>
+        <interface>com.atlassian.sal.api.lifecycle.LifecycleAware</interface>
+        <interface>com.atlassian.example.scheduling.TwitterMonitor</interface>
+    </component>
+
+
+    <web-item key="schedulerActionLink" section="system.admin/system"
+              i18n-name-key="com.atlassian.example.scheduling.adminLink"
+              name="Scheduled Twitter Search" weight="1">
+        <label key="com.atlassian.example.scheduling.adminLink"/>
+        <link linkId="schedulerActionLink">/secure/admin/TwitterScheduler.jspa</link>
+    </web-item>
+
+    <webwork1 key="schedulerAction" name="SAL Scheduler Example">
+        <actions>
+            <action name="com.atlassian.example.scheduling.SchedulerAction"
+                    alias="TwitterScheduler">
+                <view name="success">/templates/scheduler.vm</view>
+                <view name="input">/templates/scheduler.vm</view>
+            </action>
+        </actions>
+    </webwork1>
+    
+</atlassian-plugin>

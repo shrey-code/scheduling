@@ -1,0 +1,40 @@
+...
+    <form method="post" action="TwitterScheduler!reschedule.jspa">
+        <p>
+            <table>
+                <tr>
+                    <td>$i18n.getText("com.atlassian.example.scheduling.queryCell")</td>
+                    <td><input type="text" name="query" value="$query"></td>
+                </tr>
+                <tr>
+                    <td>$i18n.getText("com.atlassian.example.scheduling.intervalCell")</td>
+                    <td><input type="text" name="interval" value="$interval"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="$i18n.getText("com.atlassian.example.scheduling.applyButton")"></td>
+                </tr>
+            </table>
+        </p>
+    </form>
+...
+    <table class="jiraform maxWidth">
+        <thead class="jiraformheader">
+            <tr>
+                <th colspan="2">$i18n.getText("com.atlassian.example.scheduling.result.header.from")</th>
+                <th>$i18n.getText("com.atlassian.example.scheduling.result.header.tweet")</th>
+                <th>$i18n.getText("com.atlassian.example.scheduling.result.header.date")</th>
+            </tr>
+        </thead>
+        <tbody id="tweets">
+            #foreach ( $tweet in $tweets )
+            <tr>
+                <td><img src="$tweet.profileImageUrl" width="48" height="48"></td>
+                <td>$tweet.fromUser</td>
+                <td>$tweet.text</td>
+                <td>$tweet.createdAt</td>
+            </tr>
+            #end
+        </tbody>
+    </table>
+    <div style="text-align: center;">$i18n.getText("com.atlassian.example.scheduling.lastRun") <b>$lastRun</b></div>
+...
